@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using static Lab2.Predicates.MaterialConditions;
 
 namespace Lab2.UI
 {
     public interface IConditionsUserInterface
     {
+        void PrintExitSuggestion();
         string RequestHypothesis();
         string RequestConditionValue(MaterialCondition condition);
         void PrintNewLine();

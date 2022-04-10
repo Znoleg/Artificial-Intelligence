@@ -9,22 +9,27 @@ namespace Lab2.UI
     public class UserInterface : IGlobalConditionStringProvider, IConditionsUserInterface
     {
         private readonly IEnumerable<string> _materialNames;
+        private readonly string _exitMessage;
 
-        public UserInterface(IEnumerable<string> materialNames)
+        public event Action OnExitPrint;
+
+        public UserInterface(IEnumerable<string> materialNames, string exitMessage = "выйти")
         {
             _materialNames = materialNames;
+            _exitMessage = exitMessage.ToLower();
         }
 
         /// <returns>String representing material name</returns>
         public string RequestHypothesis()
         {
-            Console.WriteLine($"Пожалуйста, выдвините гепотезу, о подходящем материале, " +
+            Console.WriteLine($"Пожалуйста, выдвините гепотезу о подходящем материале, " +
                 $"например \"{_materialNames.First()}\"");
 
             string materialsString = _materialNames.ToSingleStr();
-            Console.WriteLine($"Список материалов: {materialsString}");
 
-            string materialName = Console.ReadLine().ToLower();
+            Console.WriteLine($"Список материалов: {materialsString}");
+            string materialName = GetInput();
+
             bool materialNotExists = !_materialNames.Select(name => name.ToLower()).Contains(materialName);
             if (materialNotExists)
             {
@@ -35,12 +40,15 @@ namespace Lab2.UI
             return materialName;
         }
 
+        public void PrintExitSuggestion() =>
+            Console.WriteLine($"Напишите \"{_exitMessage}\" для выхода из приложения.");
+
         public string RequestConditionValue(MaterialCondition condition)
         {
             string reqConditionMessage = StringProvider.GetNonParametrizedConditionString(condition);
 
             Console.WriteLine($"Введите значение атрибута {reqConditionMessage}: ");
-            string conditionValue = Console.ReadLine().ToLower();
+            string conditionValue = GetInput();
             if (!ValidateConditionValue(condition, conditionValue))
             {
                 Console.WriteLine($"Неправильный ввод! Попробуйте ещё раз.");
@@ -122,5 +130,16 @@ namespace Lab2.UI
 
         private bool IsInRange(uint number, Range range) =>
             number >= range.Start.Value && number < range.End.Value;
+
+        private string GetInput()
+        {
+            string userInput = Console.ReadLine().ToLower();
+            if (userInput == _exitMessage)
+            {
+                OnExitPrint?.Invoke();
+            }
+
+            return userInput;
+        }
     }
 }

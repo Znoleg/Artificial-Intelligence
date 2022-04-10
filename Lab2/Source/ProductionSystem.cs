@@ -48,6 +48,7 @@ namespace Lab2
         private void DoLoop()
         {
             string requestedMaterialName = _userInterface.RequestHypothesis();
+
             if (CheckHypothesis(requestedMaterialName) == false)
             {
                 PrintConculsion(false, requestedMaterialName);

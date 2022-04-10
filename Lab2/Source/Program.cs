@@ -1,4 +1,6 @@
-﻿namespace Lab2
+﻿using System;
+
+namespace Lab2
 {
     public class Program
     {
@@ -11,9 +13,17 @@
             var bootstrapper = new Bootstrapper(MaterialsFilePath, GlobalBasePath, LocalBasePath);
             bootstrapper.Bootstrap();
 
+            bootstrapper.UserInterface.PrintExitSuggestion();
+            bootstrapper.UserInterface.OnExitPrint += EndProgram;
+
             new ProductionSystem(bootstrapper.Materials, Bootstrapper.Conditions,
                 Bootstrapper.OnConditionValueRecieved, bootstrapper.UserInterface)
                 .StartLooping();
+        }
+
+        private static void EndProgram()
+        {
+            Environment.Exit(0);
         }
     }
 }
