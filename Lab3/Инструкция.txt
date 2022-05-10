@@ -1,0 +1,4 @@
+Lab3
+Для запуска программы перейдите в Build и запустите файл FrameKnowledgeModel.exe
+Исходный код программы хранится в папке Source
+Отчёт - файл ReportLab3.docx
