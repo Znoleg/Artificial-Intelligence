@@ -1,0 +1,28 @@
+/*****************************************************************************
+
+		Copyright (c) НовГУ
+
+ Project:  LOGIC_ES_WIN
+ FileName: logic_es_win.PRE
+ Purpose: Predicate definitions for LOGIC_ES_WIN.PRO
+ Written by: Михайлов Д.В.
+ Comments:
+******************************************************************************/
+
+GLOBAL FACTS
+
+     dummy
+     d_rule(rule_number,category,category,conditions)
+     d_cond(cond_number,condition)
+     d_topic(condition)
+     yes(cond_number)
+     no(cond_number)
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+
+  project_ShowHelpContext(INTEGER Index) - (i)
+  dlg_about_dialog_Create(WINDOW Parent) - (i)
+  tb_project_toolbar_Create(WINDOW Parent) - (i)
+  tb_help_line_Create(WINDOW Parent) - (i)
+%END_DECL
